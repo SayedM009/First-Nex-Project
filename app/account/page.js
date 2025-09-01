@@ -1,9 +1,9 @@
-import React from "react";
-
+import { auth } from "../_lib/auth";
 export const metadata = {
   title: "Account",
 };
 
-export default function page() {
-  return <div>account</div>;
+export default async function page() {
+  const session = await auth();
+  return <h1 className="text-7xl text-accent-500">{session?.user?.name}</h1>;
 }

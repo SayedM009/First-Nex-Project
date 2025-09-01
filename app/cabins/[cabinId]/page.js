@@ -1,3 +1,4 @@
+import Reservation from "@/app/_components/Reservation";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -21,6 +22,7 @@ export default async function Page({ params }) {
   const cabin = await getCabin(params.cabinId);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
+
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
@@ -67,9 +69,12 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
+        <h2 className="text-5xl font-semibold text-center mb-5">
           Reserve today. Pay on arrival.
         </h2>
+      </div>
+      <div>
+        <Reservation cabin={cabin} />
       </div>
     </div>
   );
