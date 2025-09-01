@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function UpdateProfileForm({ children }) {
+export default function UpdateProfileForm({ children, ...props }) {
+  const { sessgion } = props;
+  console.log(props);
   const [count, setCount] = useState();
   const countryFlag = "/bg.png";
   return (
@@ -13,6 +15,7 @@ export default function UpdateProfileForm({ children }) {
         <input
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          defaultValue={sessgion?.user?.name}
         />
       </div>
 
@@ -21,6 +24,7 @@ export default function UpdateProfileForm({ children }) {
         <input
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          defaultValue={sessgion?.user?.email}
         />
       </div>
 
@@ -44,6 +48,7 @@ export default function UpdateProfileForm({ children }) {
         <input
           name="nationalID"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+          defaultValue={sessgion?.user.id}
         />
       </div>
 

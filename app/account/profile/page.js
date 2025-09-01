@@ -1,12 +1,13 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
+import { auth } from "@/app/_lib/auth";
 import Image from "next/image";
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
   const countryFlag = "/bg.png";
   const nationality = "portugal";
-
+  const sessgion = await auth();
   return (
     <div>
       <h2 className="font-semibold text-2xl text-accent-400 mb-4">
@@ -17,7 +18,7 @@ export default function Page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <UpdateProfileForm>
+      <UpdateProfileForm sessgion={sessgion}>
         <SelectCountry
           name="nationality"
           id="nationality"
