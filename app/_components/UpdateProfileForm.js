@@ -2,29 +2,35 @@
 
 import Image from "next/image";
 import { useState } from "react";
-
-export default function UpdateProfileForm({ children, ...props }) {
-  const { sessgion } = props;
-  console.log(props);
+import { updateGuest } from "../_lib/actions";
+import { useFormStatus } from "react-dom";
+import SpinnerMini from "./SpinnerMini";
+export default function UpdateProfileForm({ guest, children }) {
+  const { id, fullName, email, nationalID, countryFlag } = guest;
   const [count, setCount] = useState();
-  const countryFlag = "/bg.png";
+
   return (
-    <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+    <form
+      action={updateGuest}
+      className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+    >
       <div className="space-y-2">
         <label>Full name</label>
         <input
+          name="fullName"
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
-          defaultValue={sessgion?.user?.name}
+          defaultValue={fullName}
         />
       </div>
 
       <div className="space-y-2">
         <label>Email address</label>
         <input
+          name="email"
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
-          defaultValue={sessgion?.user?.email}
+          defaultValue={email}
         />
       </div>
 
@@ -35,7 +41,7 @@ export default function UpdateProfileForm({ children, ...props }) {
             src={countryFlag}
             alt="Country flag"
             className="h-5 rounded-sm"
-            width={50}
+            width={20}
             height={50}
           />
         </div>
@@ -48,15 +54,25 @@ export default function UpdateProfileForm({ children, ...props }) {
         <input
           name="nationalID"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          defaultValue={sessgion?.user.id}
+          defaultValue={nationalID}
         />
       </div>
 
       <div className="flex justify-end items-center gap-6">
-        <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-          Update profile
-        </button>
+        <Button />
       </div>
     </form>
+  );
+}
+
+function Button() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      className="bg-accent-500 min-w-52 min-h-15 flex justify-center px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+    >
+      {pending ? <SpinnerMini /> : "Update profile"}
+    </button>
   );
 }
